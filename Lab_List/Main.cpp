@@ -35,7 +35,7 @@ int main() {
 	//l.DeleteAll();
 	l.Delete(4);
 	l.Print();
-
+	// sdfhjsdklfhjsdlfk
 	system("pause");
 	return 0;
 }
