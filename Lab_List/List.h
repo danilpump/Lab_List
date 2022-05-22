@@ -29,4 +29,5 @@ public:
 	string getValue(int);
 	void setValue(int, string, int color = 7);
 	void setColor(int, int color = 7);
+	void changeFont(int);
 };

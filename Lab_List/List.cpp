@@ -61,11 +61,14 @@ void List::Delete(int index)
 {
     int count = 1;                // Находим элемент, который хотим удалить по индексу
     Node* Del = tail;
-    if (index <= size)
+    if ((index <= size) && (index != 0))
+    {
         while (count != index) {
             Del = Next(Del);
             count++;
         };
+    }
+    else { cout << "index <= size не выполняется\n"; return; }
 
     Node* pv = Prev(Del);         // Заводим указатели на предыдущий удаляемому и последующий удаляемому элементы
     Node* nx = Next(Del);
@@ -87,8 +90,8 @@ void List::Delete(int index)
 void List::Print()
 {
     if (isEmpty()) { cout << "Список пуст" << endl; return; }
+    
     Node* p = tail;
-
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     while (p != NULL) {
@@ -158,6 +161,7 @@ void List::Read(string tmptex)
             if (stream.eof())
             {
                 file_buffer.pop_back();
+                file_buffer += "\n";
                 this->Add(file_buffer);
                 file_buffer.clear();
             }
@@ -169,10 +173,13 @@ string List::getValue(int index)
     int count = 1;
     Node* p = tail;
     if (index <= size)
+    {
         while (count != index) {
             p = Next(p);
             count++;
         };
+    }
+    else { cout << "index <= size не выполняется\n"; return ""; }
     return getValue(p);
 }
 
@@ -180,11 +187,14 @@ void List::setValue(int index, string tval, int color)
 {
     int count = 1;
     Node* p = tail;
-    if (index <= size)
+    if (index <= size && (index != 0))
+    {
         while (count != index) {
             p = Next(p);
             count++;
         };
+    }
+    else { cout << "index <= size не выполняется\n"; return; }
     p->color = color;
     p->val = tval;
 }
@@ -193,10 +203,34 @@ void List::setColor(int index, int color)
 {
     int count = 1;
     Node* p = tail;
-    if (index <= size)
+    if ((index <= size)&&(index!=0))
+    {
         while (count != index) {
             p = Next(p);
             count++;
         };
+    }
+    else { cout << "index <= size не выполняется\n"; return; }
     p->color = color;
+}
+
+void List::changeFont(int cFont)
+{
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = 0;
+    cfi.dwFontSize.Y = 16;
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+
+    switch (cFont) 
+    {
+    case 1:wcscpy_s(cfi.FaceName, L"NSimSun"); break;
+    case 2:wcscpy_s(cfi.FaceName, L"Unispace"); break;
+    case 3:wcscpy_s(cfi.FaceName, L"MS Gothic"); break;
+    case 4:wcscpy_s(cfi.FaceName, L"Lucida Console"); break;
+    default:wcscpy_s(cfi.FaceName, L"Consolas"); break;
+    }
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
