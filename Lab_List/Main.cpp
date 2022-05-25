@@ -52,6 +52,7 @@ int main() {
 				<< "4) Изменить шрифт\n"
 				<< "5) Удалить строку\n"
 				<< "6) Очистить список\n"
+				<< "7) Сохранить в файл\n"
 				<< "0) Выход\n";
 			char t2;
 			cin >> t2;
@@ -103,6 +104,13 @@ int main() {
 			}
 				break;
 			case '6': l.DeleteAll(); break;
+			case '7':
+			{
+				string buffer;
+				cout << "Введите имя сохраняемого файла:\n";
+				cin >> buffer;
+				l.Write(buffer);
+			}	break;
 			case '0': flag = false; break;
 			}
 		}
